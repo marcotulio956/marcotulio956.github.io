@@ -124,6 +124,7 @@ function App() {
           <nav className="section-nav" aria-label="Primary">
             <a href="#projects">Projects</a>
             <a href="#papers">Papers / Whitepapers</a>
+            <a href="#posts">Posts</a>
             <a href="#about">About Me</a>
           </nav>
         </div>
