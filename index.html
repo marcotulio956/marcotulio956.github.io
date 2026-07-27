@@ -11,41 +11,12 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="hero">
-      <div class="container">
-        <h1 id="name"></h1>
-        <p id="tagline" class="tagline"></p>
-      </div>
-    </header>
+    <div id="root"></div>
 
-    <main class="container">
-      <section aria-labelledby="about-title">
-        <h2 id="about-title">About Me</h2>
-        <p id="about"></p>
-      </section>
-
-      <section aria-labelledby="projects-title">
-        <h2 id="projects-title">Projects</h2>
-        <div id="projects" class="grid"></div>
-      </section>
-
-      <section aria-labelledby="papers-title">
-        <h2 id="papers-title">Papers & Whitepapers</h2>
-        <div id="papers" class="grid"></div>
-      </section>
-
-      <section aria-labelledby="posts-title">
-        <h2 id="posts-title">Posts</h2>
-        <div id="post-filters" class="filters"></div>
-        <div id="posts" class="grid"></div>
-      </section>
-
-      <section aria-labelledby="socials-title">
-        <h2 id="socials-title">Socials</h2>
-        <ul id="socials" class="socials"></ul>
-      </section>
-    </main>
-
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" src="script.js"></script>
   </body>
 </html>

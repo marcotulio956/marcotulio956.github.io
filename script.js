@@ -1,15 +1,9 @@
-const profile = {
-  name: "Marco Tulio",
+const { useEffect, useMemo, useState } = React;
+
+const profileData = {
   tagline: "Engineer, researcher, and builder.",
   about:
     "I build software and explore ideas in technology, systems, and research. This page collects my work, writing, and social links.",
-  projects: [
-    {
-      title: "marcotulio956.github.io",
-      description: "Personal landing page and portfolio.",
-      url: "https://github.com/marcotulio956/marcotulio956.github.io",
-    },
-  ],
   papers: [
     {
       title: "Sample Whitepaper",
@@ -43,94 +37,164 @@ const profile = {
   ],
 };
 
-const state = {
-  activeLabel: "all",
-};
-
-function el(id) {
-  return document.getElementById(id);
+function Section({ title, children }) {
+  return (
+    <section aria-label={title}>
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
 }
 
-function card({ title, description, summary, url, labels }) {
-  const text = description || summary || "";
-  const labelHtml = labels?.length
-    ? `<p class="labels">${labels.map((label) => `<span>${label}</span>`).join("")}</p>`
-    : "";
+function Card({ title, description, summary, url, labels }) {
+  const text = description || summary;
 
-  return `
-    <article class="card">
-      <h3>${title}</h3>
-      <p>${text}</p>
-      ${labelHtml}
-      <a href="${url}" target="_blank" rel="noopener noreferrer">Open</a>
+  return (
+    <article className="card">
+      <h3>{title}</h3>
+      {text ? <p>{text}</p> : null}
+      {labels?.length ? (
+        <p className="labels">
+          {labels.map((label) => (
+            <span key={label}>[+] {label}</span>
+          ))}
+        </p>
+      ) : null}
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        Open
+      </a>
     </article>
-  `;
+  );
 }
 
-function renderProfile() {
-  el("name").textContent = profile.name;
-  el("tagline").textContent = profile.tagline;
-  el("about").textContent = profile.about;
+function App() {
+  const [activeLabel, setActiveLabel] = useState("all");
+  const [user, setUser] = useState(null);
+  const [projects, setProjects] = useState([]);
 
-  el("projects").innerHTML = profile.projects.map(card).join("");
-  el("papers").innerHTML = profile.papers.map(card).join("");
-  renderPosts();
-  renderSocials();
-}
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [userRes, reposRes] = await Promise.all([
+          axios.get("https://api.github.com/users/marcotulio956"),
+          axios.get(
+            "https://api.github.com/users/marcotulio956/repos?sort=updated&per_page=6"
+          ),
+        ]);
 
-function renderSocials() {
-  el("socials").innerHTML = profile.socials
-    .map(
-      ({ name, url }) =>
-        `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${name}</a></li>`
-    )
-    .join("");
-}
-
-function uniqueLabels() {
-  return [...new Set(profile.posts.flatMap((post) => post.labels))].sort();
-}
-
-function renderFilters() {
-  const labels = ["all", ...uniqueLabels()];
-  el("post-filters").innerHTML = labels
-    .map((label) => {
-      const active = state.activeLabel === label;
-      return `<button class="filter${active ? " active" : ""}" data-label="${label}">${label}</button>`;
-    })
-    .join("");
-}
-
-function filteredPosts() {
-  if (state.activeLabel === "all") {
-    return profile.posts;
-  }
-
-  return profile.posts.filter((post) => post.labels.includes(state.activeLabel));
-}
-
-function renderPosts() {
-  renderFilters();
-  const posts = filteredPosts();
-  el("posts").innerHTML = posts.map(card).join("");
-}
-
-function setupFilterEvents() {
-  el("post-filters").addEventListener("click", (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLButtonElement)) {
-      return;
+        setUser(userRes.data);
+        setProjects(
+          reposRes.data.map((repo) => ({
+            title: repo.name,
+            description: repo.description || "Repository project",
+            url: repo.html_url,
+          }))
+        );
+      } catch (_error) {
+        setUser({
+          name: "Marco Tulio",
+          avatar_url:
+            "https://avatars.githubusercontent.com/u/1314065622?v=4",
+          bio: profileData.about,
+        });
+        setProjects([
+          {
+            title: "marcotulio956.github.io",
+            description: "Personal landing page and portfolio.",
+            url: "https://github.com/marcotulio956/marcotulio956.github.io",
+          },
+        ]);
+      }
     }
 
-    const nextLabel = target.dataset.label;
-    if (!nextLabel || nextLabel === state.activeLabel) {
-      return;
+    loadData();
+  }, []);
+
+  const labels = useMemo(() => {
+    return [
+      "all",
+      ...new Set(profileData.posts.flatMap((post) => post.labels || [])),
+    ];
+  }, []);
+
+  const filteredPosts = useMemo(() => {
+    if (activeLabel === "all") {
+      return profileData.posts;
     }
 
-    state.activeLabel = nextLabel;
-    renderPosts();
-  });
+    return profileData.posts.filter((post) => post.labels.includes(activeLabel));
+  }, [activeLabel]);
+
+  return (
+    <>
+      <header className="hero">
+        <div className="container">
+          <img
+            className="hero-banner"
+            src={user?.avatar_url || "https://avatars.githubusercontent.com/u/1314065622?v=4"}
+            alt="Profile banner"
+          />
+          <p className="tagline">{profileData.tagline}</p>
+        </div>
+      </header>
+
+      <main className="container">
+        <Section title="About Me">
+          <p>
+            {user?.name || "Marco Tulio"} — {user?.bio || profileData.about}
+          </p>
+        </Section>
+
+        <Section title="Projects">
+          <div className="grid">
+            {projects.map((project) => (
+              <Card key={project.url} {...project} />
+            ))}
+          </div>
+        </Section>
+
+        <Section title="Papers & Whitepapers">
+          <div className="grid">
+            {profileData.papers.map((paper) => (
+              <Card key={paper.title} {...paper} />
+            ))}
+          </div>
+        </Section>
+
+        <Section title="Posts">
+          <div className="filters">
+            {labels.map((label) => (
+              <button
+                key={label}
+                className={`filter${activeLabel === label ? " active" : ""}`}
+                onClick={() => setActiveLabel(label)}
+                type="button"
+              >
+                [{activeLabel === label ? "x" : " "}] {label}
+              </button>
+            ))}
+          </div>
+          <div className="grid">
+            {filteredPosts.map((post) => (
+              <Card key={post.title} {...post} />
+            ))}
+          </div>
+        </Section>
+
+        <Section title="Socials">
+          <ul className="socials">
+            {profileData.socials.map((social) => (
+              <li key={social.name}>
+                <a href={social.url} target="_blank" rel="noopener noreferrer">
+                  [+] {social.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      </main>
+    </>
+  );
 }
 
-renderProfile();
-setupFilterEvents();
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
