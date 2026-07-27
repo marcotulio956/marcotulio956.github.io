@@ -105,7 +105,7 @@ function App() {
     <>
       <header className="hero">
         <div className="banner-shell">
-          <img className="hero-banner" src="imgs/banner.jpg" alt="Site banner" />
+          <img className="hero-banner" src="imgs/banner.png" alt="Site banner" />
         </div>
         <div className="container hero-profile">
           <img
