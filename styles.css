@@ -24,6 +24,10 @@ body {
   line-height: 1.5;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .container {
   width: min(960px, 92vw);
   margin: 0 auto;
@@ -31,22 +35,48 @@ body {
 
 .hero {
   border-bottom: 1px solid var(--hairline);
-  padding: 32px 0;
+  padding: 0 0 20px;
+}
+
+.hero.compact {
+  padding: 24px 0 20px;
+}
+
+.banner-shell {
+  width: 100%;
+  height: clamp(180px, 30vw, 300px);
+  background: var(--surface-dark);
+  overflow: hidden;
+  border-bottom: 1px solid var(--hairline);
 }
 
 .hero-banner {
   display: block;
   width: 100%;
-  max-width: 320px;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.hero-profile {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-image {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  object-fit: contain;
+  object-position: center;
   border: 1px solid var(--hairline-strong);
-  border-radius: 4px;
-  background: var(--surface-dark);
+  background: var(--surface-soft);
 }
 
 .tagline {
-  margin: 16px 0 0;
+  margin: 0;
   color: var(--mute);
 }
 
@@ -63,6 +93,10 @@ section {
 h2,
 h3 {
   margin: 0 0 12px;
+}
+
+h1 {
+  margin: 0;
 }
 
 p {
@@ -122,6 +156,11 @@ p {
   color: var(--canvas);
 }
 
+.filter:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .socials {
   list-style: none;
   padding: 0;
@@ -130,8 +169,66 @@ p {
   gap: 8px;
 }
 
+.section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.section-nav a {
+  border: 1px solid var(--hairline-strong);
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--canvas);
+}
+
+.show-all-wrap {
+  margin-top: 14px;
+}
+
+.show-all {
+  display: inline-block;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.pagination {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 @media (max-width: 640px) {
+  .hero-profile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 900px) {
   .hero-banner {
-    max-width: 100%;
+    object-fit: cover;
   }
 }

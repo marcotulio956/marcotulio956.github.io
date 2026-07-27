@@ -1,45 +1,11 @@
 const { useEffect, useMemo, useState } = React;
 
-const profileData = {
-  tagline: "Engineer, researcher, and builder.",
-  about:
-    "I build software and explore ideas in technology, systems, and research. This page collects my work, writing, and social links.",
-  papers: [
-    {
-      title: "Sample Whitepaper",
-      description: "A placeholder for upcoming papers and whitepapers.",
-      url: "#",
-    },
-  ],
-  posts: [
-    {
-      title: "Systems Thinking in Practice",
-      summary: "How to reason about complexity and trade-offs in software.",
-      labels: ["systems", "engineering"],
-      url: "#",
-    },
-    {
-      title: "Research Notes: AI and Tooling",
-      summary: "Notes on practical AI usage in software workflows.",
-      labels: ["ai", "research"],
-      url: "#",
-    },
-    {
-      title: "Writing Maintainable Code",
-      summary: "Principles to keep software clear, resilient, and scalable.",
-      labels: ["engineering", "quality"],
-      url: "#",
-    },
-  ],
-  socials: [
-    { name: "GitHub", url: "https://github.com/marcotulio956" },
-    { name: "LinkedIn", url: "#" },
-  ],
-};
+const profileData = window.profileData || {};
+const MAX_HOME_POSTS = 6;
 
-function Section({ title, children }) {
+function Section({ id, title, children }) {
   return (
-    <section aria-label={title}>
+    <section id={id} aria-label={title}>
       <h2>{title}</h2>
       {children}
     </section>
@@ -113,39 +79,58 @@ function App() {
   const labels = useMemo(() => {
     return [
       "all",
-      ...new Set(profileData.posts.flatMap((post) => post.labels || [])),
+      ...new Set((profileData.posts || []).flatMap((post) => post.labels || [])),
     ];
   }, []);
 
   const filteredPosts = useMemo(() => {
     if (activeLabel === "all") {
-      return profileData.posts;
+      return profileData.posts || [];
     }
 
-    return profileData.posts.filter((post) => post.labels.includes(activeLabel));
+    return (profileData.posts || []).filter((post) =>
+      (post.labels || []).includes(activeLabel)
+    );
   }, [activeLabel]);
+  const visiblePosts = useMemo(
+    () => filteredPosts.slice(0, MAX_HOME_POSTS),
+    [filteredPosts]
+  );
+  const allPostsLink =
+    activeLabel === "all"
+      ? "posts.html"
+      : `posts.html?label=${encodeURIComponent(activeLabel)}`;
 
   return (
     <>
       <header className="hero">
-        <div className="container">
+        <div className="banner-shell">
+          <img className="hero-banner" src="imgs/banner.jpg" alt="Site banner" />
+        </div>
+        <div className="container hero-profile">
           <img
-            className="hero-banner"
-            src={user?.avatar_url || "https://avatars.githubusercontent.com/u/1314065622?v=4"}
-            alt="Profile banner"
+            className="profile-image"
+            src={
+              user?.avatar_url ||
+              "https://avatars.githubusercontent.com/u/1314065622?v=4"
+            }
+            alt="Profile picture"
           />
-          <p className="tagline">{profileData.tagline}</p>
+          <div>
+            <p className="tagline">{profileData.tagline}</p>
+          </div>
+        </div>
+        <div className="container">
+          <nav className="section-nav" aria-label="Primary">
+            <a href="#projects">Projects</a>
+            <a href="#papers">Papers / Whitepapers</a>
+            <a href="#about">About Me</a>
+          </nav>
         </div>
       </header>
 
       <main className="container">
-        <Section title="About Me">
-          <p>
-            {user?.name || "Marco Tulio"} — {user?.bio || profileData.about}
-          </p>
-        </Section>
-
-        <Section title="Projects">
+        <Section id="projects" title="Projects">
           <div className="grid">
             {projects.map((project) => (
               <Card key={project.url} {...project} />
@@ -153,7 +138,7 @@ function App() {
           </div>
         </Section>
 
-        <Section title="Papers & Whitepapers">
+        <Section id="papers" title="Papers & Whitepapers">
           <div className="grid">
             {profileData.papers.map((paper) => (
               <Card key={paper.title} {...paper} />
@@ -161,7 +146,7 @@ function App() {
           </div>
         </Section>
 
-        <Section title="Posts">
+        <Section id="posts" title="Posts">
           <div className="filters">
             {labels.map((label) => (
               <button
@@ -175,22 +160,32 @@ function App() {
             ))}
           </div>
           <div className="grid">
-            {filteredPosts.map((post) => (
+            {visiblePosts.map((post) => (
               <Card key={post.title} {...post} />
             ))}
           </div>
+          <p className="show-all-wrap">
+            <a className="show-all" href={allPostsLink}>
+              Show all
+            </a>
+          </p>
         </Section>
 
-        <Section title="Socials">
-          <ul className="socials">
-            {profileData.socials.map((social) => (
-              <li key={social.name}>
-                <a href={social.url} target="_blank" rel="noopener noreferrer">
-                  [+] {social.name}
-                </a>
-              </li>
-            ))}
-          </ul>
+        <Section id="about" title="About Me">
+          <div className="about-layout">
+            <p>
+              {user?.name || "Marco Tulio"} — {user?.bio || profileData.about}
+            </p>
+            <ul className="socials">
+              {profileData.socials.map((social) => (
+                <li key={social.name}>
+                  <a href={social.url} target="_blank" rel="noopener noreferrer">
+                    [+] {social.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Section>
       </main>
     </>
