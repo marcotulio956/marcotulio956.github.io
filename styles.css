@@ -17,7 +17,9 @@
 
 body {
   margin: 0;
-  background: var(--canvas);
+  background:
+    linear-gradient(rgba(253, 252, 252, 0.88), rgba(253, 252, 252, 0.88)),
+    url("imgs/background.png") center / cover fixed;
   color: var(--ink);
   font-family: "Berkeley Mono", "IBM Plex Mono", "SFMono-Regular", Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
@@ -59,7 +61,7 @@ html {
 }
 
 .hero-profile {
-  margin-top: -52px;
+  margin-top: -78px;
   position: relative;
   z-index: 1;
   display: flex;
@@ -75,8 +77,8 @@ html {
 }
 
 .profile-image {
-  width: 104px;
-  height: 104px;
+  width: 156px;
+  height: 156px;
   border-radius: 50%;
   object-fit: contain;
   object-position: center;
@@ -87,6 +89,15 @@ html {
 .tagline {
   margin: 0;
   color: var(--mute);
+}
+
+.profile-copy {
+  padding-bottom: 10px;
+}
+
+.profile-about {
+  max-width: 620px;
+  margin-top: 8px;
 }
 
 main {
@@ -123,7 +134,7 @@ p {
   border: 1px solid var(--hairline);
   border-radius: 4px;
   padding: 12px;
-  background: var(--surface-soft);
+  background: rgba(248, 247, 247, 0.92);
 }
 
 .card a,
@@ -284,7 +295,7 @@ p {
 
 @media (max-width: 640px) {
   .hero-profile {
-    margin-top: -40px;
+    margin-top: -60px;
     flex-direction: column;
     align-items: flex-start;
   }

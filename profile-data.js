@@ -1,7 +1,7 @@
 window.profileData = {
-  tagline: "",
+  tagline: "testing tagline",
   about:
-    "",
+    "testing about me",
   papers: [
     {
       title: "Place Holder",

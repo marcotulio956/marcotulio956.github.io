@@ -121,8 +121,9 @@ function App() {
               alt="Profile picture"
             />
           </div>
-          <div>
+          <div className="profile-copy">
             <p className="tagline">{profileData.tagline}</p>
+            <p className="profile-about">{profileData.about}</p>
           </div>
         </div>
         <div className="container">
