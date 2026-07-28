@@ -68,7 +68,7 @@ function App() {
         setProjects([
           {
             title: "marcotulio956.github.io",
-            description: "Personal landing page and portfolio.",
+            description: "Check out how this landing page was created!.",
             url: "https://github.com/marcotulio956/marcotulio956.github.io",
           },
         ]);
