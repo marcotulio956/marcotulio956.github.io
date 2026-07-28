@@ -12,7 +12,7 @@ function Section({ id, title, children }) {
   );
 }
 
-function Card({ title, description, summary, url, labels }) {
+function Card({ title, description, summary, url, labels, external = true }) {
   const text = description || summary;
 
   return (
@@ -26,8 +26,8 @@ function Card({ title, description, summary, url, labels }) {
           ))}
         </p>
       ) : null}
-      <a href={url} target="_blank" rel="noopener noreferrer">
-        Open
+      <a href={url} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+        {external ? "Open" : "Read post"}
       </a>
     </article>
   );
@@ -37,6 +37,8 @@ function App() {
   const [activeLabel, setActiveLabel] = useState("all");
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [postsError, setPostsError] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -76,22 +78,26 @@ function App() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    window.postLibrary.loadPosts().then(setPosts).catch(() => setPostsError(true));
+  }, []);
+
   const labels = useMemo(() => {
     return [
       "all",
-      ...new Set((profileData.posts || []).flatMap((post) => post.labels || [])),
+      ...new Set(posts.flatMap((post) => post.labels || [])),
     ];
-  }, []);
+  }, [posts]);
 
   const filteredPosts = useMemo(() => {
     if (activeLabel === "all") {
-      return profileData.posts || [];
+      return posts;
     }
 
-    return (profileData.posts || []).filter((post) =>
+    return posts.filter((post) =>
       (post.labels || []).includes(activeLabel)
     );
-  }, [activeLabel]);
+  }, [activeLabel, posts]);
   const visiblePosts = useMemo(
     () => filteredPosts.slice(0, MAX_HOME_POSTS),
     [filteredPosts]
@@ -108,14 +114,13 @@ function App() {
           <img className="hero-banner" src="imgs/banner.png" alt="Site banner" />
         </div>
         <div className="container hero-profile">
-          <img
-            className="profile-image"
-            src={
-              user?.avatar_url ||
-              "https://avatars.githubusercontent.com/u/1314065622?v=4"
-            }
-            alt="Profile picture"
-          />
+          <div className="profile-image-wrap">
+            <img
+              className="profile-image"
+              src={user?.avatar_url || "https://avatars.githubusercontent.com/u/1314065622?v=4"}
+              alt="Profile picture"
+            />
+          </div>
           <div>
             <p className="tagline">{profileData.tagline}</p>
           </div>
@@ -127,6 +132,9 @@ function App() {
             <a href="#posts">Posts</a>
             <a href="#about">About Me</a>
           </nav>
+          <p className="posts-cta-wrap">
+            <a className="posts-cta" href="posts.html">Browse all posts →</a>
+          </p>
         </div>
       </header>
 
@@ -162,9 +170,10 @@ function App() {
           </div>
           <div className="grid">
             {visiblePosts.map((post) => (
-              <Card key={post.title} {...post} />
+              <Card key={post.slug} {...post} external={false} />
             ))}
           </div>
+          {postsError ? <p>Posts are temporarily unavailable.</p> : null}
           <p className="show-all-wrap">
             <a className="show-all" href={allPostsLink}>
               Show all

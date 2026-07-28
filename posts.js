@@ -1,6 +1,5 @@
 const { useMemo, useState } = React;
 
-const profileData = window.profileData || {};
 const POSTS_PER_PAGE = 12;
 
 function Card({ title, summary, url, labels }) {
@@ -15,9 +14,7 @@ function Card({ title, summary, url, labels }) {
           ))}
         </p>
       ) : null}
-      <a href={url} target="_blank" rel="noopener noreferrer">
-        Open
-      </a>
+      <a href={url}>Read post</a>
     </article>
   );
 }
@@ -28,25 +25,31 @@ function App() {
     initialLabel && initialLabel !== "" ? initialLabel : "all"
   );
   const [page, setPage] = useState(1);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(false);
+
+  React.useEffect(() => {
+    window.postLibrary.loadPosts().then(setPosts).catch(() => setError(true));
+  }, []);
 
   const labels = useMemo(() => {
     return [
       "all",
-      ...new Set((profileData.posts || []).flatMap((post) => post.labels || [])),
+      ...new Set(posts.flatMap((post) => post.labels || [])),
     ];
-  }, []);
+  }, [posts]);
 
   const safeActiveLabel = labels.includes(activeLabel) ? activeLabel : "all";
 
   const filteredPosts = useMemo(() => {
     if (safeActiveLabel === "all") {
-      return profileData.posts || [];
+      return posts;
     }
 
-    return (profileData.posts || []).filter((post) =>
+    return posts.filter((post) =>
       (post.labels || []).includes(safeActiveLabel)
     );
-  }, [safeActiveLabel]);
+  }, [safeActiveLabel, posts]);
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
   const safePage = Math.min(page, totalPages);
@@ -92,6 +95,7 @@ function App() {
               <Card key={post.title} {...post} />
             ))}
           </div>
+          {error ? <p>Posts are temporarily unavailable.</p> : null}
 
           <div className="pagination" role="navigation" aria-label="Post pages">
             <button
