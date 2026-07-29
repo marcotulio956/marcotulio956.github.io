@@ -1,7 +1,7 @@
 window.profileData = {
-  tagline: "testing tagline",
+  tagline: "Everything is a computation"
   about:
-    "testing about me",
+    "exploring VLSI IC Designs, Neuromorphic Computing, DNA strands, and Quantum Computing to build the next generation of intelligent hardware.",
   // This ordered list controls exactly which GitHub repositories appear as projects.
   // Add, remove, or reorder entries; `repository` must match the repository name on GitHub.
   projects: [
