@@ -6,3 +6,4 @@
 [x] sections: about me, posts, papers, projects
 [X] blog posts filters and view all
 [X] publishing posts rendered based on .md files
+[X] select which repo goes into projects

@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
     if (!slug) return setError(true);
     window.postLibrary.loadPost(slug).then((loadedPost) => {
-      document.title = `${loadedPost.title} | Marco Tulio`;
+      document.title = `${loadedPost.title} | Marco Túlio`;
       setPost(loadedPost);
     }).catch(() => setError(true));
   }, [slug]);

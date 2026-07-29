@@ -131,10 +131,15 @@ p {
 }
 
 .card {
+  min-width: 0;
   border: 1px solid var(--hairline);
   border-radius: 4px;
   padding: 12px;
   background: rgba(248, 247, 247, 0.92);
+}
+
+.card h3 {
+  overflow-wrap: anywhere;
 }
 
 .card a,

@@ -3,6 +3,16 @@ const { useEffect, useMemo, useState } = React;
 const profileData = window.profileData || {};
 const MAX_HOME_POSTS = 6;
 
+function projectSettings() {
+  return (profileData.projects || []).map((project) =>
+    typeof project === "string" ? { repository: project } : project
+  );
+}
+
+function githubProjectUrl(repository) {
+  return `https://github.com/marcotulio956/${encodeURIComponent(repository)}`;
+}
+
 function Section({ id, title, children }) {
   return (
     <section id={id} aria-label={title}>
@@ -42,36 +52,46 @@ function App() {
 
   useEffect(() => {
     async function loadData() {
+      const selectedProjects = projectSettings();
+
       try {
         const [userRes, reposRes] = await Promise.all([
           axios.get("https://api.github.com/users/marcotulio956"),
           axios.get(
-            "https://api.github.com/users/marcotulio956/repos?sort=updated&per_page=6"
+            "https://api.github.com/users/marcotulio956/repos?per_page=100"
           ),
         ]);
 
         setUser(userRes.data);
+        const repositories = new Map(
+          reposRes.data.map((repository) => [repository.name, repository])
+        );
         setProjects(
-          reposRes.data.map((repo) => ({
-            title: repo.name,
-            description: repo.description || "Repository project",
-            url: repo.html_url,
-          }))
+          selectedProjects.flatMap((project) => {
+            const repository = repositories.get(project.repository);
+            if (!repository) return [];
+            return [{
+              title: project.title || repository.name,
+              description:
+                project.description || repository.description || "Repository project",
+              url: repository.html_url,
+            }];
+          })
         );
       } catch (_error) {
         setUser({
-          name: "Marco Tulio",
+          name: "Marco Túlio",
           avatar_url:
             "https://avatars.githubusercontent.com/u/1314065622?v=4",
           bio: profileData.about,
         });
-        setProjects([
-          {
-            title: "marcotulio956.github.io",
-            description: "Check out how this landing page was created!.",
-            url: "https://github.com/marcotulio956/marcotulio956.github.io",
-          },
-        ]);
+        setProjects(
+          selectedProjects.map((project) => ({
+            title: project.title || project.repository,
+            description: project.description || "Repository project",
+            url: githubProjectUrl(project.repository),
+          }))
+        );
       }
     }
 
@@ -146,6 +166,7 @@ function App() {
               <Card key={project.url} {...project} />
             ))}
           </div>
+          {projects.length === 0 ? <p>No projects selected yet.</p> : null}
         </Section>
 
         <Section id="papers" title="Papers & Whitepapers">
@@ -185,7 +206,7 @@ function App() {
         <Section id="about" title="About Me">
           <div className="about-layout">
             <p>
-              {user?.name || "Marco Tulio"} — {user?.bio || profileData.about}
+              {user?.name || "Marco Túlio"} — {user?.bio || profileData.about}
             </p>
             <ul className="socials">
               {profileData.socials.map((social) => (
