@@ -1,11 +1,9 @@
 ---
-title: How to use Julia packages using calls in R scripts"
+title: How to use Julia packages using calls in R scripts
 summary: example for the DiffEqBase package for speeding up performance in R 
-date: 2026-07-21
-labels: 
+date: 2026-07-22
+labels: algortihms, crn
 ---
-
-```
 
 ## Install and precompile the Julia side
 
@@ -156,11 +154,5 @@ legend("topright", legend = c("A", "B"), col = 1:2, lty = 1)
 
 `out$values` has one row per saved time and one column per species, which makes it easy to plot or join back to the rest of an R analysis pipeline.
 
-## Practical notes
 
-* Keep setup out of tight loops. Initializing Julia has a one-time cost; set it up once per R session or container build.
-* Send larger inputs across the boundary once, then do the numerical work in Julia. This avoids spending time repeatedly converting R and Julia objects.
-* Pin Julia and package versions for production work. A Julia project environment is the most reliable way to do that.
-* If `ODEProblem` is not found, ensure `DifferentialEquations` is loaded in Julia (via the startup hook above or an explicit Julia command) before evaluating the problem.
-
-That is the basic recipe: R stays in charge of the application and results, while Julia handles the ODE solve.
+That is the basic recipe! R stays in charge of the application and results, while Julia handles the your package command.
