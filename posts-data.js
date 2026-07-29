@@ -3,11 +3,15 @@ const postsRepository =
 
 window.postManifest = [
   {
-    slug: "research-notes-ai-and-tooling",
-    source: `${postsRepository}posts/research-notes-ai-and-tooling.md`,
+    slug: "first-notes",
+    source: `${postsRepository}posts/first-notes.md`,
   },
   {
     slug: "simulated-annealing-vlsi",
     source: `${postsRepository}posts/simulated-annealing-vlsi.md`,
-  }
+  },
+  {
+    slug: "julia-call-R",
+    source: `${postsRepository}posts/julia-call-R.md`,
+  },
 ];

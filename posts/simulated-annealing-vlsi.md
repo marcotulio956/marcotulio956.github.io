@@ -5,5 +5,3 @@ date: 2026-07-29
 labels: algorithms, vsli, natural
 notebook: https://github.com/marcotulio956/smart.algoAI/blob/master/simulated_annealing/SA_VLSI_Placement.ipynb
 ---
-
-testing
