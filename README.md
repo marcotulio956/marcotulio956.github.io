@@ -28,4 +28,18 @@ projects: [
 ],
 ```
 
+## Embedding a Jupyter notebook in a post
+
+Add a `notebook` line to a post's front matter with its GitHub `blob` URL. The post page renders the full notebook through nbviewer and keeps a direct GitHub link below it.
+
+```md
+---
+title: Ant Colony Optimization for the TSP
+summary: An implementation notebook for an ant-colony solver.
+date: 2026-07-29
+labels: algorithms, ai
+notebook: https://github.com/marcotulio956/smart.algoAI/blob/master/antc/ACO_TSP.ipynb
+---
+```
+
 _fell free to use these repos_

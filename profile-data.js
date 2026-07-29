@@ -1,7 +1,7 @@
 window.profileData = {
-  tagline: "Everything is a computation"
+  tagline: "Everything is a computation",
   about:
-    "exploring VLSI IC Designs, Neuromorphic Computing, DNA strands, and Quantum Computing to build the next generation of intelligent hardware.",
+    "exploring VLSI IC, Neuromorphic Computing, DNA strands, and Quantum Computing as a next generation of intelligent hardware.",
   // This ordered list controls exactly which GitHub repositories appear as projects.
   // Add, remove, or reorder entries; `repository` must match the repository name on GitHub.
   projects: [
@@ -10,14 +10,17 @@ window.profileData = {
       description: "checkout how this page was made",
     },
     { repository: "crn.dna.dsd_MComputing" },
-    { repository: "cache.coherencyLAOCII "},
+    { repository: "cache.coherencyLAOCII"},
     { repository: "Trees_n_Graphs" },
     { repository: "sharpEdge.cpu" },
     { repository: "nano.compQBMD"},
+    { repository: "gen.asmCOMP"},
+    { repository: "smart.algoAI"},
+
   ],
   papers: [
     {
-      title: "Consensus Algorithms for Multi-Agent Systems",
+      title: "2022 Consensus Algorithms for Multi-Agent Systems",
       description: "Exploring dynamics for rendezvous and leader following",
       url: "https://drive.google.com/file/d/1zJMBf3K0YWNBt9QxsuQ0aZF3h2wWYtAm/view?usp=sharing#",
     },

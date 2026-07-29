@@ -1,5 +1,20 @@
 const { useEffect, useState } = React;
 
+function notebookViewerUrl(notebookUrl) {
+  if (!notebookUrl) return null;
+
+  try {
+    const url = new URL(notebookUrl);
+    if (url.protocol !== "https:") return null;
+    if (url.hostname === "github.com") {
+      return `https://nbviewer.org/github${url.pathname}`;
+    }
+    return url.href;
+  } catch (_error) {
+    return null;
+  }
+}
+
 function App() {
   const [post, setPost] = useState(null);
   const [error, setError] = useState(false);
@@ -17,6 +32,7 @@ function App() {
   if (!post) return <main className="container post-page"><p>Loading post…</p></main>;
 
   const html = DOMPurify.sanitize(marked.parse(post.body));
+  const notebookUrl = notebookViewerUrl(post.notebook);
   return (
     <main className="container post-page">
       <p className="show-all-wrap"><a className="show-all" href="posts.html">← All posts</a></p>
@@ -25,6 +41,17 @@ function App() {
         <p className="post-date">{post.date}</p>
         <p className="labels">{post.labels.map((label) => <span key={label}>[+] {label}</span>)}</p>
         <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+        {notebookUrl ? (
+          <section className="notebook-embed" aria-label="Embedded Jupyter notebook">
+            <h2>Notebook</h2>
+            <iframe title={`Notebook: ${post.title}`} src={notebookUrl} loading="lazy" />
+            <p>
+              <a href={post.notebook} target="_blank" rel="noopener noreferrer">
+                Open the notebook on GitHub
+              </a>
+            </p>
+          </section>
+        ) : null}
       </article>
     </main>
   );
