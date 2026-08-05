@@ -20,6 +20,11 @@ window.profileData = {
   ],
   papers: [
     {
+      title: "2023 How does the EU AI Act promote socially sustainable AI?",
+      description: "A critical analysis of the EU AI Act and its implications for socially sustainable AI",
+      url: "https://sustainability-ai.de/static/a83a03ce1b3d5194ce415d23e48fe7d2/Project-Report.pdf",
+    },
+    {
       title: "2022 Consensus Algorithms for Multi-Agent Systems",
       description: "Exploring dynamics for rendezvous and leader following",
       url: "https://drive.google.com/file/d/1zJMBf3K0YWNBt9QxsuQ0aZF3h2wWYtAm/view?usp=sharing#",
