@@ -24,6 +24,11 @@ window.profileData = {
       description: "Exploring dynamics for rendezvous and leader following",
       url: "https://drive.google.com/file/d/1zJMBf3K0YWNBt9QxsuQ0aZF3h2wWYtAm/view?usp=sharing#",
     },
+    {
+      title: "2021 FPGA Modeling of Izhikevich Spiking Neurons",
+      description: "Power analysis of Floating point and fixed point implementations of Izhikevich neurons on FPGA",
+      url: "https://drive.google.com/file/d/1Z8G-PQtk9weyzfl6sASmZMaiCiqyNYkt/view?usp=sharing"
+    }
   ],
   socials: [
     { name: "GitHub", url: "https://github.com/marcotulio956" },

@@ -41,5 +41,9 @@ labels: algorithms, ai
 notebook: https://github.com/marcotulio956/smart.algoAI/blob/master/antc/ACO_TSP.ipynb
 ---
 ```
+### Python for opening ports
+```
+python3 -m http.server 8000
+```
 
 _fell free to use these repos_
