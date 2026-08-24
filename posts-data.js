@@ -21,4 +21,5 @@ window.postManifest = [
   {
     slug: "np-completeness",
     source: `${postsRepository}posts/np-completeness-clrs.md`,
+  },
 ];
