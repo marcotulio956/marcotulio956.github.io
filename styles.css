@@ -268,9 +268,10 @@ p {
 
 .markdown-body {
   margin-top: 24px;
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--hairline-strong);
   padding: 24px;
-  background: var(--canvas);
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 0, 0, 0.08);
 }
 
 .markdown-body > * + * {
