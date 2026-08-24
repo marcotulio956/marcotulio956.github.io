@@ -14,4 +14,12 @@ window.postManifest = [
     slug: "julia-call-R",
     source: `${postsRepository}posts/julia-call-R.md`,
   },
+  {
+    slug: "algo-complexity",
+    source: `${postsRepository}posts/algorithm-design-techniques-and-dp-heuristics.md`,
+  },
+  {
+    slug: "np-completeness",
+    source: `${postsRepository}posts/np-completeness-clrs.md`,
+  },
 ];
