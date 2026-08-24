@@ -5,15 +5,13 @@ date: 2026-08-23
 labels: algorithms, vsli
 ---
 
-# NP-Completeness, SAT, and Why We Use Heuristics for Clock-Tree Routing
-
 The NP-completeness chapter in *Introduction to Algorithms* can feel like a hard left turn: we go from designing algorithms that are provably fast to learning why some problems probably have no such algorithm. The good news is that this is not a chapter about giving up. It is a chapter about recognizing a kind of problem early enough to choose the right tool: an exact solver on small instances, an approximation with a guarantee, or a well-designed heuristic for the real chip we need to route today.
 
 This post follows Chapter 34 of the fourth edition of CLRS—“NP-Completeness,” beginning on p. 1048—and then carries the ideas into a concrete application: using Steiner-tree ideas during VLSI clock-tree synthesis (CTS).
 
 > **A terminology warning up front:** `NP` means *nondeterministic polynomial time*. It does **not** mean “non-polynomial,” and it does not mean “impossible in practice.”
 
-Before diving into hardness proofs, the companion post, [Trees_n_Graphs](https://github.com/marcotulio956/Trees_n_Graphs), introduces asymptotic notation and the design techniques used when an exact polynomial-time solution is not available.
+Before diving into hardness proofs, the companion post, [Algo_Complexity](https://marcotulio956.github.io/post.html?slug=algo-complexity), introduces asymptotic notation and the design techniques used when an exact polynomial-time solution is not available.
 
 Recommended Watch
 

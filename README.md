@@ -19,6 +19,13 @@ labels: engineering, research
 
 Math in posts is rendered with KaTeX. Use `$$...$$` or `\[...\]` for display equations, and `\(...\)` or `$...$` for inline equations.
 
+Mermaid diagrams are also rendered client-side. Put Mermaid syntax in a fenced code block with the `mermaid` language:
+
+```mermaid
+flowchart LR
+  A[Start] --> B[Finish]
+```
+
 ## Choosing projects
 
 Edit the `projects` list in `profile-data.js` to choose the project cards and their display order. Each `repository` value must match a repository name on your GitHub profile. An optional `title` or `description` overrides the values fetched from GitHub.
