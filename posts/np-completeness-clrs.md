@@ -83,11 +83,7 @@ The certificate is a *hint*, not something the verifier is expected to discover.
 Consider the decision form of the weighted graph Steiner Tree problem:
 
 $$
-\begin{aligned}
-\textsc{Steiner-Tree} = \{(G,w,R,B) \mid {}& \text{there exists a tree } T \subseteq G \\
-&\text{that contains every terminal in } R \\
-&\text{and } \sum_{e\in E(T)} w(e) \le B\}.
-\end{aligned}
+\mathrm{SteinerTree} = \{(G,w,R,B) \mid \text{there exists a tree } T \subseteq G \text{ containing every terminal in } R \text{ with } \sum_{e\in E(T)} w(e) \le B\}.
 $$
 
 Here `G = (V,E)`, `w(e)` is a nonnegative edge weight, `R` is the required terminal set, and `B` is the budget. A certificate can simply name the proposed edge set `F`.
