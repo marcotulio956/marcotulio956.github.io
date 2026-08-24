@@ -14,4 +14,8 @@ window.postManifest = [
     slug: "julia-call-R",
     source: `${postsRepository}posts/julia-call-R.md`,
   },
+  {
+    slug: "algo-complexity.R",
+    source: `${postsRepository}posts/algorithm-design-techniques-and-dp-heuristics.md`,
+  },
 ];
