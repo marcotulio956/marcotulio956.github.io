@@ -1,7 +1,7 @@
 ---
 title: Algorithm Design Techniques, Growth Functions, and When DP Becomes Heuristic
 summary: A compact guide to asymptotic notation, dynamic programming, divide-and-conquer, greedy algorithms, backtracking, and branch-and-bound.
-date: 2026-07-23
+date: 2026-08-23
 labels: algorithms
 ---
 

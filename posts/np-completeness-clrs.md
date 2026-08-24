@@ -1,6 +1,6 @@
 ---
-title: "NP-Completeness, SAT, and Why We Use Heuristics for Clock-Tree Routing"
-summary: "A practical companion to Chapter 34 of CLRS, from polynomial verification and Cook–Levin to Steiner trees in VLSI."
+title: NP-Completeness, SAT, and Why We Use Heuristics for Clock-Tree Routing
+summary: A practical companion to Chapter 34 of CLRS, from polynomial verification and Cook–Levin to Steiner trees in VLSI.
 date: 2026-08-23
 labels: algorithms, vsli
 ---
