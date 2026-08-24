@@ -18,6 +18,7 @@ function notebookViewerUrl(notebookUrl) {
 function App() {
   const [post, setPost] = useState(null);
   const [error, setError] = useState(false);
+  const markdownRef = React.useRef(null);
   const slug = new URLSearchParams(window.location.search).get("slug");
 
   useEffect(() => {
@@ -28,10 +29,23 @@ function App() {
     }).catch(() => setError(true));
   }, [slug]);
 
+  const html = post ? DOMPurify.sanitize(marked.parse(post.body)) : "";
+  useEffect(() => {
+    if (!markdownRef.current) return;
+    renderMathInElement(markdownRef.current, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$", right: "$", display: false },
+      ],
+      throwOnError: false,
+    });
+  }, [html]);
+
   if (error) return <main className="container post-page"><h1>Post not found</h1><p className="show-all-wrap"><a className="show-all" href="posts.html">Back to posts</a></p></main>;
   if (!post) return <main className="container post-page"><p>Loading post…</p></main>;
 
-  const html = DOMPurify.sanitize(marked.parse(post.body));
   const notebookUrl = notebookViewerUrl(post.notebook);
   return (
     <main className="container post-page">
@@ -40,7 +54,7 @@ function App() {
         <h1>{post.title}</h1>
         <p className="post-date">{post.date}</p>
         <p className="labels">{post.labels.map((label) => <span key={label}>[+] {label}</span>)}</p>
-        <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+        <div ref={markdownRef} className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
         {notebookUrl ? (
           <section className="notebook-embed" aria-label="Embedded Jupyter notebook">
             <h2>Notebook</h2>

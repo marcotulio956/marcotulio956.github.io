@@ -17,6 +17,8 @@ labels: engineering, research
 ---
 ```
 
+Math in posts is rendered with KaTeX. Use `$$...$$` or `\[...\]` for display equations, and `\(...\)` or `$...$` for inline equations.
+
 ## Choosing projects
 
 Edit the `projects` list in `profile-data.js` to choose the project cards and their display order. Each `repository` value must match a repository name on your GitHub profile. An optional `title` or `description` overrides the values fetched from GitHub.
