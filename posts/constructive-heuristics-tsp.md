@@ -102,26 +102,17 @@ $$
 
 In matrix-chain multiplication, the recurrence chooses the best split point \(k\):
 
-$$
-m[i,j] = \min_{i \leq k < j}
-\left\{m[i,k] + m[k+1,j] + p_{i-1}p_kp_j\right\}.
-$$
+$$ m[i,j] = \min_{i \leq k < j} \left\{m[i,k] + m[k+1,j] + p_{i-1}p_kp_j\right\} $$
 
 Both are exact because every allowed first cut or split is considered. A constructive heuristic would instead pick one plausible cut or split and commit. That can be fast, but it loses the DP proof unless a separate greedy-choice proof exists.
 
 The exact subset DP for TSP makes the contrast sharper. Fix start city \(r\); for \(S\subseteq V\setminus\{r\}\) and \(j\in S\), let \(D[S,j]\) be the shortest path from \(r\) that visits exactly \(S\) and ends at \(j\):
 
-$$
-D[S,j] = \min_{i\in S\setminus\{j\}}
-\left\{D[S\setminus\{j\},i] + d(i,j)\right\}.
-$$
+$$ D[S,j] = \min_{i\in S\setminus\{j\}} \left\{D[S\setminus\{j\},i] + d(i,j)\right\} $$
 
 Then
 
-$$
-OPT = \min_{j\in V\setminus\{r\}}
-\left\{D[V\setminus\{r\},j] + d(j,r)\right\}.
-$$
+$$ OPT = \min_{j\in V\setminus\{r\}} \left\{D[V\setminus\{r\},j] + d(j,r)\right\} $$
 
 It is exact, but it has \(\Theta(n^2 2^n)\) time and \(\Theta(n2^n)\) space. A tour constructor avoids this exponential state space by making a small sequence of committed choices.
 
