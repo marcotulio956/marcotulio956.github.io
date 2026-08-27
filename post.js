@@ -46,17 +46,27 @@ function App() {
   useEffect(() => {
     if (!markdownRef.current) return;
 
-    const diagrams = [...markdownRef.current.querySelectorAll("pre > code.language-mermaid")].map((code) => {
-      const diagram = document.createElement("div");
-      diagram.className = "mermaid";
-      diagram.textContent = code.textContent;
-      code.parentElement.replaceWith(diagram);
-      return diagram;
-    });
+    const renderDiagrams = () => {
+      const diagrams = [...markdownRef.current.querySelectorAll("pre > code.language-mermaid")].map((code) => {
+        const diagram = document.createElement("div");
+        diagram.className = "mermaid";
+        diagram.textContent = code.textContent;
+        code.parentElement.replaceWith(diagram);
+        return diagram;
+      });
 
-    if (!diagrams.length) return;
-    mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: "base" });
-    mermaid.run({ nodes: diagrams });
+      if (!diagrams.length || !window.mermaid) return;
+      window.mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: "base" });
+      window.mermaid.run({ nodes: diagrams });
+    };
+
+    if (window.mermaid) {
+      renderDiagrams();
+      return undefined;
+    }
+
+    window.addEventListener("mermaid-ready", renderDiagrams, { once: true });
+    return () => window.removeEventListener("mermaid-ready", renderDiagrams);
   }, [html]);
 
   if (error) return <main className="container post-page"><h1>Post not found</h1><p className="show-all-wrap"><a className="show-all" href="posts.html">Back to posts</a></p></main>;

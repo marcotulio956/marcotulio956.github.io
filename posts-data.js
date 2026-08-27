@@ -19,6 +19,10 @@ window.postManifest = [
     source: `${postsRepository}posts/algorithm-design-techniques-and-dp-heuristics.md`,
   },
   {
+    slug: "constructive-heuristics-tsp",
+    source: `${postsRepository}posts/constructive-heuristics-tsp.md`,
+  },
+  {
     slug: "np-completeness",
     source: `${postsRepository}posts/np-completeness-clrs.md`,
   },
