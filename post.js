@@ -15,6 +15,11 @@ function notebookViewerUrl(notebookUrl) {
   }
 }
 
+function preserveMathBackslashes(markdown) {
+  const mathBlocks = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\))/g;
+  return markdown.replace(mathBlocks, (math) => math.replace(/\\/g, "&#92;"));
+}
+
 function App() {
   const [post, setPost] = useState(null);
   const [error, setError] = useState(false);
@@ -29,7 +34,7 @@ function App() {
     }).catch(() => setError(true));
   }, [slug]);
 
-  const html = post ? DOMPurify.sanitize(marked.parse(post.body)) : "";
+  const html = post ? DOMPurify.sanitize(marked.parse(preserveMathBackslashes(post.body))) : "";
   useEffect(() => {
     if (!markdownRef.current) return;
     renderMathInElement(markdownRef.current, {
