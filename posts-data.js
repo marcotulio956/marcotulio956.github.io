@@ -26,4 +26,8 @@ window.postManifest = [
     slug: "np-completeness",
     source: `${postsRepository}posts/np-completeness-clrs.md`,
   },
+  {
+    slu: "local-search-heuristics",
+    source: `${postsRepository}posts/local-search-heuristics.md`,
+  },
 ];
