@@ -30,4 +30,8 @@ window.postManifest = [
     slug: "local-search-heuristics",
     source: `${postsRepository}posts/local-search-heuristics.md`,
   },
+  {
+    slug: "quantum-simulation-qiskit.md",
+    source: `${postsRepository}posts/quantum-simulation-qiskit.md`,
+  },
 ];
