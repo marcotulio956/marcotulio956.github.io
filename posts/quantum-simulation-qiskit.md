@@ -151,9 +151,9 @@ the evolution can be implemented by conjugating a single-qubit rotation with two
 
 \[
 e^{-iJtZ_0Z_1}=
-\operatorname{CNOT}_{0\rightarrow1}
+\mathrm{CNOT}_{0\rightarrow1}
 R_Z^{(1)}(2Jt)
-\operatorname{CNOT}_{0\rightarrow1}.
+\mathrm{CNOT}_{0\rightarrow1}.
 \]
 
 In circuit execution order, apply the first CNOT, then \(R_Z(2Jt)\) to qubit 1, and then the second CNOT. The circuit transforms a one-qubit phase rotation into the required two-qubit interaction.
